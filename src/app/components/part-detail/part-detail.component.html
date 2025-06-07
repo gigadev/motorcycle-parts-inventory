@@ -1,0 +1,22 @@
+<div class="bg-white rounded shadow p-4 max-w-xl mx-auto">
+  <h2 class="text-xl font-semibold mb-4">Part Details</h2>
+  <ng-container *ngIf="part; else loadingOrNotFound">
+    <div class="mb-4 flex justify-center">
+      <img [src]="part.imageUrl || part.image_url" alt="part image" class="h-32 w-56 object-cover rounded" />
+    </div>
+    <div class="mb-2"><span class="font-bold">Make:</span> {{ part.make }}</div>
+    <div class="mb-2"><span class="font-bold">Model:</span> {{ part.model }}</div>
+    <div class="mb-2"><span class="font-bold">Name:</span> {{ part.name }}</div>
+    <div class="mb-2"><span class="font-bold">Year:</span> {{ part.year }}</div>
+    <div class="mb-2"><span class="font-bold">Description:</span> {{ part.description }}</div>
+    <div class="mb-2"><span class="font-bold">Quantity:</span> {{ part.quantity }}</div>
+    <div class="mb-2"><span class="font-bold">Price:</span> {{ part.price | currency }}</div>
+    <div class="mt-4 flex gap-4">
+      <a [routerLink]="['/edit', part.id]" class="bg-yellow-600 text-white px-4 py-2 rounded">Edit</a>
+      <a routerLink="/parts" class="bg-gray-400 text-white px-4 py-2 rounded">Back to List</a>
+    </div>
+  </ng-container>
+  <ng-template #loadingOrNotFound>
+    <div *ngIf="!part">Loading or part not found.</div>
+  </ng-template>
+</div>

@@ -1,0 +1,13 @@
+<div class="min-h-screen bg-gray-100">
+  <header class="bg-blue-900 text-white p-4 text-center text-2xl font-bold">
+    {{ title }}
+  </header>
+  <nav class="bg-blue-800 text-white p-2 flex gap-4 justify-center">
+    <a routerLink="/parts" routerLinkActive="font-bold underline" class="hover:underline">Parts List</a>
+    <a routerLink="/add" routerLinkActive="font-bold underline" class="hover:underline">Add Part</a>
+    <a routerLink="/angular-sqlite-usage" routerLinkActive="font-bold underline" class="hover:underline">Angular / SQLite Usage</a>
+  </nav>
+  <main class="p-4">
+    <router-outlet></router-outlet>
+  </main>
+</div>
