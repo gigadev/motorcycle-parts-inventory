@@ -5,6 +5,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
       target: frontend
+    image: motorcycle-parts-inventory_frontend:latest
     ports:
       - "80:80"
     depends_on:
@@ -14,6 +15,7 @@ services:
       context: ..
       dockerfile: docker/Dockerfile
       target: backend
+    image: motorcycle-parts-inventory_backend:latest
     ports:
       - "3000:3000"
     volumes:
