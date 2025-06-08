@@ -1,0 +1,62 @@
+<h1>Docker on AWS</h1>
+<p>This guide explains how to deploy your Dockerized Motorcycle Parts Inventory app to AWS so you can access it from anywhere on the Internet.</p>
+
+<h2>Prerequisites</h2>
+<ul>
+  <li>An <a href="https://aws.amazon.com/">AWS account</a></li>
+  <li><a href="https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html">AWS CLI</a> installed and configured</li>
+  <li><a href="https://docs.docker.com/get-docker/">Docker</a> installed</li>
+</ul>
+
+<h2>1. Create an AWS Account</h2>
+<p>Sign up at <a href="https://aws.amazon.com/">aws.amazon.com</a> and complete the setup.</p>
+
+<h2>2. Configure AWS CLI</h2>
+<pre><code>aws configure
+</code></pre>
+<p>Enter your AWS credentials and default region.</p>
+
+<h2>3. Create an ECR Repository</h2>
+<ul>
+  <li>Go to the <a href="https://console.aws.amazon.com/ecr/">ECR Console</a></li>
+  <li>Click <b>Create repository</b></li>
+  <li>Name it (e.g., <code>motorcycle-parts-inventory</code>)</li>
+  <li>Note the repository URI</li>
+</ul>
+
+<h2>4. Build and Push Docker Images</h2>
+<pre><code>aws ecr get-login-password --region &lt;your-region&gt; | docker login --username AWS --password-stdin &lt;your-account-id&gt;.dkr.ecr.&lt;your-region&gt;.amazonaws.com
+
+docker-compose -f docker/docker-compose.yml build
+
+docker tag motorcyclepartsangular_frontend:latest &lt;ecr-uri&gt;:frontend
+docker tag motorcyclepartsangular_backend:latest &lt;ecr-uri&gt;:backend
+
+docker push &lt;ecr-uri&gt;:frontend
+docker push &lt;ecr-uri&gt;:backend
+</code></pre>
+
+<h2>5. Deploy with AWS ECS (Fargate)</h2>
+<ul>
+  <li>Go to the <a href="https://console.aws.amazon.com/ecs/">ECS Console</a></li>
+  <li>Create a new <b>Cluster</b> (choose Fargate)</li>
+  <li>Create a <b>Task Definition</b> with two containers:
+    <ul>
+      <li><b>frontend</b>: Use the frontend ECR image, map port 80</li>
+      <li><b>backend</b>: Use the backend ECR image, map port 3000</li>
+    </ul>
+  </li>
+  <li>Set up networking to allow HTTP (port 80) and backend (port 3000) access</li>
+  <li>Launch a <b>Service</b> using your Task Definition</li>
+</ul>
+
+<h2>6. Access Your App</h2>
+<p>Once deployed, ECS will provide a public DNS or IP. Open it in your browser to view your app.</p>
+
+<h2>Notes</h2>
+<ul>
+  <li>For production, consider using an Application Load Balancer and HTTPS.</li>
+  <li>You can use AWS Route 53 to set up a custom domain.</li>
+</ul>
+
+<p><b>Need help?</b> See the official <a href="https://docs.aws.amazon.com/ecs/latest/developerguide/ecs-launch-types.html">AWS ECS documentation</a> for more details.</p>

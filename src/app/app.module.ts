@@ -10,6 +10,7 @@ import { PartEditComponent } from './components/part-edit/part-edit.component';
 import { PartDetailComponent } from './components/part-detail/part-detail.component';
 import { PartsService } from './services/parts.service';
 import { AngularSqliteUsageComponent } from './components/angular-sqlite-usage/angular-sqlite-usage.component';
+import { DockerOnAwsComponent } from './components/docker-on-aws/docker-on-aws.component';
 
 const routes: Routes = [
   { path: '', redirectTo: 'parts', pathMatch: 'full' },
@@ -17,7 +18,8 @@ const routes: Routes = [
   { path: 'parts/:id', component: PartDetailComponent },
   { path: 'edit/:id', component: PartEditComponent },
   { path: 'add', component: PartEditComponent },
-  { path: 'angular-sqlite-usage', component: AngularSqliteUsageComponent }
+  { path: 'angular-sqlite-usage', component: AngularSqliteUsageComponent },
+  { path: 'docker-on-aws', component: DockerOnAwsComponent }
 ];
 
 @NgModule({
@@ -26,7 +28,8 @@ const routes: Routes = [
     PartListComponent,
     PartEditComponent,
     PartDetailComponent,
-    AngularSqliteUsageComponent
+    AngularSqliteUsageComponent,
+    DockerOnAwsComponent
   ],
   imports: [
     BrowserModule,
